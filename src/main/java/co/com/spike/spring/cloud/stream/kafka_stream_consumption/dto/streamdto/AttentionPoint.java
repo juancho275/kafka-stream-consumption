@@ -11,18 +11,22 @@ import lombok.Getter;
 public class AttentionPoint {
 
     @JsonProperty("CDPUNTO_ATENCION")
+    @JsonDeserialize(using = NullToIntegerDeserializer.class)
     private Integer attentionPointId;
 
     @JsonProperty("CDEMPRESA")
+    @JsonDeserialize(using = NullToIntegerDeserializer.class)
     private Integer company;
 
     @JsonProperty("DSPUNTO_ATENCION")
     private String attentionPointName;
 
     @JsonProperty("CDTIPO_PUNTO")
+    @JsonDeserialize(using = NullToIntegerDeserializer.class)
     private Integer pointType;
 
     @JsonProperty("CDCIUDAD")
+    @JsonDeserialize(using = NullToIntegerDeserializer.class)
     private Integer city;
 
     @JsonProperty("DSDIRECCION")
@@ -38,6 +42,7 @@ public class AttentionPoint {
     private String contactCellphone;
 
     @JsonProperty("CDESTADO")
+    @JsonDeserialize(using = NullToIntegerDeserializer.class)
     private Integer state;
 
     @JsonProperty("CDCODIGO")
@@ -63,9 +68,11 @@ public class AttentionPoint {
     private String cutoffTime;
 
     @JsonProperty("NMMINIMO_PASOS")
+    @JsonDeserialize(using = NullToIntegerDeserializer.class)
     private Integer minimumSteps;
 
     @JsonProperty("CDTIPO_SINCRONIZACION")
+    @JsonDeserialize(using = NullToIntegerDeserializer.class)
     private Integer synchronizationType;
 
     @JsonProperty("CDPUNTO_ATENCION_EXTERNO")

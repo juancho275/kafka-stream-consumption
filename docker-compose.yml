@@ -1,15 +1,19 @@
-# docker-compose.yml
+version: '3.8'
+
 services:
   zookeeper:
     restart: always
-    image: docker.io/bitnami/zookeeper:3.8
+    image: bitnami/zookeeper:3.8
+    container_name: zookeeper
     ports:
       - "2181:2181"
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
-  kafka:
+
+  kafka-1:
     restart: always
-    image: docker.io/bitnami/kafka:3.3
+    image: bitnami/kafka:3.3
+    container_name: kafka-1
     ports:
       - "9093:9093"
     environment:
@@ -18,17 +22,57 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
       - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
-      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka-1:9092,EXTERNAL://localhost:9093
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
+      - KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR=3
+    depends_on:
+      - zookeeper
+
+  kafka-2:
+    restart: always
+    image: bitnami/kafka:3.3
+    container_name: kafka-2
+    ports:
+      - "9094:9094"
+    environment:
+      - KAFKA_BROKER_ID=2
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9094
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka-2:9092,EXTERNAL://localhost:9094
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
+      - KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR=3
+    depends_on:
+      - zookeeper
+
+  kafka-3:
+    restart: always
+    image: bitnami/kafka:3.3
+    container_name: kafka-3
+    ports:
+      - "9095:9095"
+    environment:
+      - KAFKA_BROKER_ID=3
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9095
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka-3:9092,EXTERNAL://localhost:9095
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
+      - KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR=3
     depends_on:
       - zookeeper
 
   redpanda-console:
     restart: always
     image: docker.redpanda.com/redpandadata/console:latest
+    container_name: redpanda-console
     ports:
       - "8080:8080"
     environment:
-      - KAFKA_BROKERS=kafka:9092
+      - KAFKA_BROKERS=kafka-1:9092,kafka-2:9092,kafka-3:9092
     depends_on:
-      - kafka
+      - kafka-1
+      - kafka-2
+      - kafka-3
