@@ -1,0 +1,38 @@
+info:
+  component: oracle-to-cloud-ks-vehicle-processor
+
+server:
+  port: 9131
+  forward-headers-strategy: framework
+  servlet:
+    context-path: /oracle-to-cloud-ks-vehicle-processor
+
+spring:
+  application:
+    name: oracle-to-cloud-ks-vehicle-processor
+
+application:
+  config:
+    profile: test
+
+kafka:
+  bootstrap-servers: localhost:9095,localhost:9096,localhost:9097
+  consumer:
+    application-id: dev-oracleToCloud-ks-vehicleProcessor-test
+    auto-offset-reset: earliest
+  streams:
+    state-dir: /tmp/test
+
+topics:
+  vehicles: dev_internal_oracle_to_cloud_vehicle_topic_events
+  vehicles-store: dev_internal_oracle_to_cloud_vehicle_topic_store
+  vehicles-tags-store: dev_internal_oracle_to_cloud_vehicle_tags_topic_store
+  tags: dev_internal_oracle_to_cloud_tags_topic_events
+  tags-store: dev_internal_tags_topic_store
+  brands: dev_internal_oracle_to_cloud_vehicle_brands_topic_events
+  brandSeries: dev_internal_oracle_to_cloud_brand_series_topic_events
+  colors: dev_internal_oracle_to_cloud_vehicle_colors_topic_events
+  vehicleConfig: dev_internal_oracle_to_cloud_vehicle_configs_vehs_topic_events
+  changedVehicles: dev_customers_vehicle_changed_events
+  changedVehicleAccount: dev_customers_vehicle_account_changed_events
+  dlt: dev_customers_vehicle_dlt

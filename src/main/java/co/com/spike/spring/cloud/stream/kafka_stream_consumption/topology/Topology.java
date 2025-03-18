@@ -9,24 +9,16 @@ import co.com.spike.spring.cloud.stream.kafka_stream_consumption.topology.util.C
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.streams.kstream.GlobalKTable;
 import org.apache.kafka.streams.kstream.KStream;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.stream.binder.kafka.streams.properties.KafkaStreamsBinderConfigurationProperties;
-import org.springframework.cloud.stream.config.BindingServiceProperties;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.kafka.config.KafkaStreamsConfiguration;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @Slf4j
 @Configuration
+@EnableAutoConfiguration
 public class Topology {
 
     @Bean

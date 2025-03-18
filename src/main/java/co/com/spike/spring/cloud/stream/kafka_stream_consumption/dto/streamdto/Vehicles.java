@@ -2,8 +2,10 @@ package co.com.spike.spring.cloud.stream.kafka_stream_consumption.dto.streamdto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class Vehicles {
     @JsonProperty("CDVEHICULO")
     private Integer vehicleId;

@@ -5,8 +5,10 @@ import co.com.spike.spring.cloud.stream.kafka_stream_consumption.serdes.util.Nul
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class AdjustmentFlypass {
     @JsonProperty("CDAJUSTE")
     private long cdAjuste;
